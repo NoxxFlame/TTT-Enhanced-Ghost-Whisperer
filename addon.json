@@ -1,0 +1,19 @@
+{
+  "title": "Enhanced Detectives (CR for TTT)",
+  "type": "ServerContent",
+  "ignore": [
+    ".git*",
+    ".vscode*",
+    "*.md",
+    "*.iml",
+    ".idea*",
+    ".luacheckrc",
+    "*.psd",
+    "*.rockspec",
+    "*.svn*",
+    "*.vcproj",
+    "LICENSE",
+    "templates*",
+    "images*"
+  ]
+}
