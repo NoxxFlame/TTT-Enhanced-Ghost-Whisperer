@@ -132,6 +132,7 @@ if SERVER then
 
     hook.Add("TTTPrepareRound", "GhostWhisperer_Cleanup_TTTPrepareRound", function()
         for _, p in PlayerIterator() do
+            p:SetNWBool("TTTIsGhosting", false)
             for i = 1, ghostwhisperer_max_abilities:GetInt() do
                 local id = p:GetNWString("TTTGhostWhispererAbility" .. tostring(i), "")
                 if #id > 0 then
