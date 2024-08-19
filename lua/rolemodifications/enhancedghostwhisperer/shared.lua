@@ -66,7 +66,7 @@ if SERVER then
 
     net.Receive("TTT_GhostWhispererUseAbility", function(len, ply)
         local num = net.ReadUInt(4)
-        if ply:IsSoulbound() or not ply:GetNWBool("TTTIsGhosting", false) then return end
+        if ply:IsSoulbound() or not ply.TTTIsGhosting then return end
 
         local id = ply:GetNWString("TTTGhostWhispererAbility" .. tostring(num), "")
         if #id == 0 then return end
@@ -86,7 +86,7 @@ if SERVER then
 
     hook.Add("Think", "GhostWhisperer_Think", function()
         for _, p in PlayerIterator() do
-            if not p:IsSoulbound() and p:GetNWBool("TTTIsGhosting", false) then
+            if not p:IsSoulbound() and p.TTTIsGhosting then
                 local max = ghostwhisperer_max_abilities:GetInt()
                 for i = 1, max do
                     local id = p:GetNWString("TTTGhostWhispererAbility" .. tostring(i), "")
@@ -110,7 +110,7 @@ if SERVER then
 
     net.Receive("TTT_GhostWhispererBuyAbility", function(len, ply)
         local id = net.ReadString()
-        if ply:IsSoulbound() or not ply:GetNWBool("TTTIsGhosting", false) then return end
+        if ply:IsSoulbound() or not ply.TTTIsGhosting then return end
 
         local max = ghostwhisperer_max_abilities:GetInt()
         for i = 1, max do
@@ -171,7 +171,7 @@ if SERVER then
             message = message:gsub("^%l", string.upper)
             message = message .. " has granted you the ability to talk in chat and use abilities!"
             ply:QueueMessage(MSG_PRINTBOTH, message)
-            ply:SetNWBool("TTTIsGhosting", true)
+            ply:SetProperty("TTTIsGhosting", true)
         end
     end)
 end
@@ -522,7 +522,7 @@ if CLIENT then
         if not client then
             client = LocalPlayer()
         end
-        if client:IsSoulbound() or not client:GetNWBool("TTTIsGhosting", false) then return end
+        if client:IsSoulbound() or not client.TTTIsGhosting then return end
 
         if IsValid(dshop) then
             dshop:Close()
@@ -544,7 +544,7 @@ if CLIENT then
 
     hook.Add("PlayerBindPress", "GhostWhisperer_PlayerBindPress", function(ply, bind, pressed)
         if not IsPlayer(ply) then return end
-        if ply:IsSoulbound() or not ply:GetNWBool("TTTIsGhosting", false) then return end
+        if ply:IsSoulbound() or not ply.TTTIsGhosting then return end
         if not pressed then return end
 
         if string.StartsWith(bind, "slot") then
@@ -563,7 +563,7 @@ if CLIENT then
         if not client then
             client = LocalPlayer()
         end
-        if client:IsSoulbound() or not client:GetNWBool("TTTIsGhosting", false) then return end
+        if client:IsSoulbound() or not client.TTTIsGhosting then return end
 
         local max_abilities = ghostwhisperer_max_abilities:GetInt()
         if max_abilities == 0 then return end
